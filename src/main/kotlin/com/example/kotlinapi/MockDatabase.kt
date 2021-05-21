@@ -1,6 +1,7 @@
 package com.example.kotlinapi
 
 import com.example.kotlinapi.dto.Superhero
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
 
 @Component
@@ -23,8 +24,14 @@ class MockDatabase {
 		}
 	}
 
-	fun updateRating(heroName: String, rating: Int) {
-		inMemoryDatabase[heroName]?.let { inMemoryDatabase[heroName] = Superhero(it, rating) }
+	fun updateRating(heroName: String, rating: Int): ResponseEntity<Any> {
+		val superhero = inMemoryDatabase[heroName]
+		return if(superhero != null) {
+			inMemoryDatabase[heroName] = Superhero(superhero, rating)
+			ResponseEntity.ok(inMemoryDatabase[heroName])
+		} else {
+			ResponseEntity.notFound().build()
+		}
 	}
 
 }
