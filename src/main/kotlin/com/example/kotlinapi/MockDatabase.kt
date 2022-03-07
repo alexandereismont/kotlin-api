@@ -17,6 +17,8 @@ class MockDatabase {
 
 	fun getAllSuperheroes() = inMemoryDatabase.values
 
+	fun getSuperheroByName(name: String) = inMemoryDatabase[name]
+
 	fun addSuperHero(hero: Superhero) {
 		val storedHero = inMemoryDatabase[hero.name]
 		if(storedHero == null) {
