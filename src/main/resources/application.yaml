@@ -1,0 +1,9 @@
+server:
+  port: 8083
+  error:
+    include-message: always
+  servlet:
+    context-path: /api
+springdoc:
+  swagger-ui:
+    disable-swagger-default-url: true
