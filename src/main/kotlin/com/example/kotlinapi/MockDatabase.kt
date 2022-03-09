@@ -9,13 +9,19 @@ class MockDatabase {
 	private val inMemoryDatabase: HashMap<String, Superhero> = HashMap()
 
 	init {
-		inMemoryDatabase["Ironman"] = Superhero("Ironman", "MARVEL", 0)
-		inMemoryDatabase["Captain America"] = Superhero("Captain America", "MARVEL", 0)
-		inMemoryDatabase["Batman"] = Superhero("Batman", "DC", 0)
-		inMemoryDatabase["Superman"] = Superhero("Superman", "DC", 0)
+		inMemoryDatabase["Ironman"] = Superhero(name = "Ironman", company =  "MARVEL", rating =  0)
+		inMemoryDatabase["Captain America"] = Superhero(name = "Captain America", company =  "MARVEL", rating = 0)
+		inMemoryDatabase["Batman"] = Superhero(name = "Batman", company = "DC", rating = 0)
+		inMemoryDatabase["Superman"] = Superhero(name = "Superman", company =  "DC", rating =  0)
 	}
 
-	fun getAllSuperheroes() = inMemoryDatabase.values
+	fun getAllSuperheroes(namePattern: String?) : List<Superhero> {
+		return if(namePattern != null) {
+			inMemoryDatabase.values.filter { it.name.contains(namePattern) }.toList()
+		} else {
+			inMemoryDatabase.values.toList()
+		}
+	}
 
 	fun getSuperheroByName(name: String) = inMemoryDatabase[name]
 

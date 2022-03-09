@@ -7,3 +7,26 @@ server:
 springdoc:
   swagger-ui:
     disable-swagger-default-url: true
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/base?useSSL=false&serverTimezone=UTC
+    username: user
+    password: password
+    initialization-mode: always
+  jpa:
+    properties:
+      hibernate:
+        default_schema: base
+
+
+ # session:
+ #   jdbc:
+ #     initialize-schema: always
+
+flyway:
+  url: jdbc:mysql://localhost:3306/base
+  schemas: base
+  user: user
+  password: password
+  baselineOnMigrate: true
