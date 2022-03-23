@@ -18,5 +18,5 @@ data class Superhero(
 	@Size(min = 0, max = 10) val rating: Int)
 {
 	constructor(hero: Superhero, newRating: Int ) :
-		this(name = hero.name, company = hero.company, rating = newRating)
+		this(id = hero.id, name = hero.name, company = hero.company, rating = newRating)
 }

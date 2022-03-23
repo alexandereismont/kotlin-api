@@ -1,6 +1,5 @@
 package com.example.kotlinapi
 
-import com.example.kotlinapi.db.SuperheroRepository
 import com.example.kotlinapi.dto.RatingDto
 import com.example.kotlinapi.dto.Superhero
 import com.example.kotlinapi.errorHandling.ResourceNotFoundException
@@ -21,10 +20,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/superheroes")
-class SuperheroController(
-	val service: MockDatabase,
-	val repository: SuperheroRepository
-) {
+class SuperheroController(val service: SuperheroService) {
 
 	@GetMapping
 	fun getSuperheroes(@RequestParam namePattern: String?): List<Superhero> {
@@ -39,7 +35,7 @@ class SuperheroController(
 	}
 
 	@PostMapping
-	fun addSuperHero(@RequestBody hero: Superhero) = repository.save(hero)//service.addSuperHero(hero)
+	fun addSuperHero(@RequestBody hero: Superhero) = service.saveSuperhero(hero)
 
 	@Operation(description = "Update hero")
 	@ApiResponses(
@@ -47,6 +43,6 @@ class SuperheroController(
 		ApiResponse(responseCode = "404", description = "Hero not found")
 	)
 	@PutMapping("/{name}")
-	fun updateHero(@PathVariable("name") name: String, @RequestBody rating: RatingDto) = service.updateRating(name, rating.rating)
+	fun updateHero(@PathVariable("name") name: String, @RequestBody rating: RatingDto) = service.updateSuperhero(name, rating.rating)
 
 }
