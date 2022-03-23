@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
 
 @Component
+@Deprecated("Replaced by proper database")
 class MockDatabase {
 	private val inMemoryDatabase: HashMap<String, Superhero> = HashMap()
 
