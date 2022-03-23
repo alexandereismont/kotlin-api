@@ -19,6 +19,11 @@ spring:
       hibernate:
         default_schema: base
 
+keycloak:
+  auth-server-url: http://localhost:8180/auth
+  realm: Base
+  resource: ApiClient
+  public-client: true
 
  # session:
  #   jdbc:
