@@ -16,7 +16,7 @@ class UserPreferenceController(private val userPreferenceService: UserPreference
 	@PostMapping
 	fun savePreference(@RequestBody userPreference: UserPreferenceInput) {
 		val auth: Authentication = SecurityContextHolder.getContext().authentication
-		print((auth.principal as KeycloakPrincipal<*>).keycloakSecurityContext.token.preferredUsername)
+		println((auth.principal as KeycloakPrincipal<*>).keycloakSecurityContext.token.preferredUsername)
 		userPreferenceService.saveUserPreference(userPreference, (auth.principal as KeycloakPrincipal<*>).keycloakSecurityContext.token.preferredUsername)
 	}
 }
