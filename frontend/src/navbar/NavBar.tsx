@@ -1,13 +1,14 @@
 import React, {useState} from "react";
-import {Box, Button, Drawer, IconButton, Toolbar, Typography} from "@mui/material";
+import {Box, Button, Drawer, IconButton, Typography} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import AppBar from '@mui/material/AppBar';
+import {useKeycloak} from "@react-keycloak/web";
 
 export const NavBar = () => {
     const [open, setOpen] = useState(false)
+    const { keycloak, initialized } = useKeycloak();
 
     const setDrawerState = (drawerState: boolean) => {
-        console.log(open)
         setOpen(drawerState)
     }
 
@@ -26,7 +27,10 @@ export const NavBar = () => {
                 <Typography variant="h6">
                     Api
                 </Typography>
-                <Button color="inherit">Login</Button>
+                {keycloak.authenticated ?
+                    <Button color="inherit" onClick={() => keycloak.logout()}>Logout</Button>
+                    : <Button color="inherit" onClick={() => keycloak.login()}>Login</Button>
+                }
             </AppBar>
             <Drawer
                 open={open}

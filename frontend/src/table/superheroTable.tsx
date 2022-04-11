@@ -1,13 +1,6 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {DataGrid, GridColDef, GridDensityTypes} from '@mui/x-data-grid';
-
-const headerCells = [
-    {label: "Name"},
-    {label: "Rating"},
-    {label: "Company"},
-    {label: "Created at"},
-    {label: "Updated at"}
-]
+import {useKeycloak} from "@react-keycloak/web";
 
 const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 70, flex: 1 },
@@ -44,6 +37,24 @@ const rows = [
 ];
 
 export const SuperheroTable = () => {
+    const [data, setDate] = useState([])
+
+    const { keycloak, initialized } = useKeycloak();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const superheroes = await fetch("http://localhost:8083/api/superheroes", {
+                headers: {
+                    "Authorization": 'Bearer ' + keycloak.token,
+                    'Access-Control-Allow-Origin': '*'
+                }
+            })
+            setDate(await superheroes.json())
+          //  console.log(await superheroes.json())
+        }
+        fetchData()
+    })
+
     return (
         <div>
             <DataGrid
@@ -52,30 +63,10 @@ export const SuperheroTable = () => {
                 pageSize={5}
                 rowsPerPageOptions={[5]}
                 columns={columns}
-                rows={rows}
+                rows={data}
                 checkboxSelection
                 showColumnRightBorder={false}
             />
         </div>
     )
 }
-
-/*
-            <TableContainer>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            {headerCells.map((header) => (
-                                <TableCell
-                                    align={"center"}
-                                    padding={"normal"}
-                                    size={"medium"}
-                                >
-                                    {header.label}
-                                </TableCell>
-                            ))}
-                        </TableRow>
-                    </TableHead>
-                </Table>
-            </TableContainer>
-* */

@@ -17,6 +17,12 @@ import java.lang.Exception
 import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver
 
 import org.keycloak.adapters.KeycloakConfigResolver
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.CorsConfigurationSource
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
+import java.util.*
+import javax.servlet.http.HttpServletRequest
+
 
 @Configuration
 @EnableWebSecurity
@@ -25,6 +31,10 @@ class SecurityWebConfig: KeycloakWebSecurityConfigurerAdapter() {
 
 	override fun configure(http: HttpSecurity) {
 		super.configure(http)
+
+		http.cors()
+			.configurationSource { CorsConfiguration().applyPermitDefaultValues() }
+
 		http.csrf().disable()
 
 		http.authorizeRequests()
@@ -45,6 +55,16 @@ class SecurityWebConfig: KeycloakWebSecurityConfigurerAdapter() {
 	@Bean
 	fun KeycloakConfigResolver(): KeycloakConfigResolver {
 		return KeycloakSpringBootConfigResolver()
+	}
+
+	@Bean
+	fun corsConfigurationSource(): CorsConfigurationSource? {
+		val configuration = CorsConfiguration()
+		configuration.allowedOrigins = listOf("*")
+		configuration.allowedMethods = listOf("*")
+		val source = UrlBasedCorsConfigurationSource()
+		source.registerCorsConfiguration("/**", configuration)
+		return source
 	}
 
 }
