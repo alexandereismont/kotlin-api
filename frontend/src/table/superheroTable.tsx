@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, {FC, useCallback, useEffect} from 'react';
 import {DataGrid, GridColDef, GridDensityTypes} from '@mui/x-data-grid';
-import {useKeycloak} from "@react-keycloak/web";
 
 const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 70, flex: 1 },
@@ -32,28 +31,14 @@ const columns: GridColDef[] = [
     }
 ];
 
-const rows = [
-    {id:1, name: "Batman", rating: 2, company: 'DC', createdAt: "2022-01-01", updatedAt: "2022-02-01"},
-];
+export const SuperheroTable: FC<{data: any[], search: string}> = ({data, search}) => {
 
-export const SuperheroTable = () => {
-    const [data, setDate] = useState([])
-
-    const { keycloak, initialized } = useKeycloak();
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const superheroes = await fetch("http://localhost:8083/api/superheroes", {
-                headers: {
-                    "Authorization": 'Bearer ' + keycloak.token,
-                    'Access-Control-Allow-Origin': '*'
-                }
-            })
-            setDate(await superheroes.json())
-          //  console.log(await superheroes.json())
-        }
-        fetchData()
-    })
+    const filterSearch = useCallback(() => {
+        const filteredRows = data.filter((row) => {
+            return row.name.toLowerCase().includes(search.toLowerCase());
+        });
+        return filteredRows
+    }, [data, search])
 
     return (
         <div>
@@ -63,7 +48,7 @@ export const SuperheroTable = () => {
                 pageSize={5}
                 rowsPerPageOptions={[5]}
                 columns={columns}
-                rows={data}
+                rows={filterSearch()}
                 checkboxSelection
                 showColumnRightBorder={false}
             />

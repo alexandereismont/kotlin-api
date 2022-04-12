@@ -1,11 +1,9 @@
 import React from 'react';
 import {NavBar} from "./navbar/NavBar";
-import {Forms} from "./forms/Forms";
 import './app.scss';
-import {SuperheroTable} from "./table/superheroTable";
 import keycloak from "./Keycloak";
-import { ReactKeycloakProvider } from '@react-keycloak/web'
-
+import {ReactKeycloakProvider} from '@react-keycloak/web'
+import {DataContainer} from "./containers/dataContainer/DataContainer";
 
 function App() {
 
@@ -14,8 +12,7 @@ function App() {
             <div className="App">
                 <NavBar/>
                 <div className={`formsDiv`}>
-                    <Forms/>
-                    <SuperheroTable/>
+                    <DataContainer />
                 </div>
             </div>
         </ReactKeycloakProvider>
