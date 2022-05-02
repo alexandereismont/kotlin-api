@@ -1,8 +1,9 @@
 import React, {useState} from "react";
-import {Box, Button, Drawer, IconButton, Typography} from "@mui/material";
+import {Box, Button, Divider, Drawer, IconButton, Link, List, ListItem, ListItemText, Typography} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import AppBar from '@mui/material/AppBar';
 import {useKeycloak} from "@react-keycloak/web";
+import {Link as RouterLink} from "react-router-dom";
 
 export const NavBar = () => {
     const [open, setOpen] = useState(false)
@@ -15,7 +16,8 @@ export const NavBar = () => {
     return(
         <Box>
             <AppBar
-                sx={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}
+              //  color={"inherit"}
+                sx={{flexDirection: "row", justifyContent: "space-between", alignItems: "center", backgroundColor: 'rgb(90, 90, 90)'}}
                 position={"static"}
             >
                 <IconButton
@@ -35,7 +37,13 @@ export const NavBar = () => {
             <Drawer
                 open={open}
                 onClose={() => setDrawerState(false)}
-            />
+            >
+                <Divider />
+                <List>
+                    <ListItem component={RouterLink} to="/data"><ListItemText primary={"Data"}/></ListItem>
+                    <ListItem component={RouterLink} to="/css"><ListItemText primary={"Css"}/></ListItem>
+                </List>
+            </Drawer>
         </Box>
     )
 }
