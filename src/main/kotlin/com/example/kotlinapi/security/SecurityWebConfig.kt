@@ -1,27 +1,22 @@
 package com.example.kotlinapi.security
 
+import org.keycloak.adapters.KeycloakConfigResolver
+import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
-import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy
-import org.springframework.security.core.session.SessionRegistryImpl
-
-import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
-
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import java.lang.Exception
-import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver
-
-import org.keycloak.adapters.KeycloakConfigResolver
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper
+import org.springframework.security.core.session.SessionRegistryImpl
+import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy
+import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
-import java.util.*
-import javax.servlet.http.HttpServletRequest
 
 
 @Configuration
@@ -35,16 +30,18 @@ class SecurityWebConfig: KeycloakWebSecurityConfigurerAdapter() {
 		http.cors()
 			.configurationSource { CorsConfiguration().applyPermitDefaultValues() }
 
-		http.csrf().disable()
-
 		http.authorizeRequests()
-			.anyRequest().authenticated()
+			.antMatchers("/admin/*").hasRole("super_user")
+			.anyRequest().permitAll()
+
+		http.csrf().disable()
 	}
 
 	@Autowired
-	@Throws(Exception::class)
 	fun configureGlobal(auth: AuthenticationManagerBuilder) {
-		auth.authenticationProvider(keycloakAuthenticationProvider())
+		val keycloakProvider = this.keycloakAuthenticationProvider()
+		keycloakProvider.setGrantedAuthoritiesMapper(SimpleAuthorityMapper())
+		auth.authenticationProvider(keycloakProvider)
 	}
 
 	@Bean
