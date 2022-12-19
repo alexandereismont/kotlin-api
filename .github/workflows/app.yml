@@ -17,5 +17,4 @@ jobs:
           distribution: 'adopt'
           cache: 'maven'
       - name: Run integration tests
-        working-directory: ${{ env.workdir }}
         run: mvn install
