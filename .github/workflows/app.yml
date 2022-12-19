@@ -1,7 +1,7 @@
 name: mvn install
 
 on:
-  pull_request:
+  push:
     branches: [ '**' ]
 
 jobs:
