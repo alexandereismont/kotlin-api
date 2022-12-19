@@ -1,5 +1,6 @@
-package com.example.kotlinapi.dto
+package com.example.kotlinapi.features.superhero.dto
 
+import com.example.kotlinapi.features.superhero.dto.Superhero
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType

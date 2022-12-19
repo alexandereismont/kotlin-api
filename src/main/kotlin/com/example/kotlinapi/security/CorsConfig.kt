@@ -1,4 +1,4 @@
-package com.example.kotlinapi
+package com.example.kotlinapi.security
 
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.CorsRegistry

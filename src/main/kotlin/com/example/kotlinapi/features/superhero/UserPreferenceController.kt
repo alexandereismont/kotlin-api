@@ -1,6 +1,6 @@
-package com.example.kotlinapi
+package com.example.kotlinapi.features.superhero
 
-import com.example.kotlinapi.dto.UserPreferenceInput
+import com.example.kotlinapi.features.superhero.dto.UserPreferenceInput
 import org.keycloak.KeycloakPrincipal
 import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.PostMapping

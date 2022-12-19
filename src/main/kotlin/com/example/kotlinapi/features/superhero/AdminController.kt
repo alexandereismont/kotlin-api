@@ -1,6 +1,6 @@
-package com.example.kotlinapi
+package com.example.kotlinapi.features.superhero
 
-import com.example.kotlinapi.dto.Superhero
+import com.example.kotlinapi.features.superhero.dto.Superhero
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController

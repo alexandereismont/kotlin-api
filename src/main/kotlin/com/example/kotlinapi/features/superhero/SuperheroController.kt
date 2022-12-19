@@ -1,7 +1,7 @@
-package com.example.kotlinapi
+package com.example.kotlinapi.features.superhero
 
-import com.example.kotlinapi.dto.RatingDto
-import com.example.kotlinapi.dto.Superhero
+import com.example.kotlinapi.features.superhero.dto.RatingDto
+import com.example.kotlinapi.features.superhero.dto.Superhero
 import com.example.kotlinapi.errorHandling.ResourceNotFoundException
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content

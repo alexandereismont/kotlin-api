@@ -1,7 +1,7 @@
-package com.example.kotlinapi
+package com.example.kotlinapi.features.superhero
 
-import com.example.kotlinapi.db.SuperheroRepository
-import com.example.kotlinapi.dto.Superhero
+import com.example.kotlinapi.features.superhero.db.SuperheroRepository
+import com.example.kotlinapi.features.superhero.dto.Superhero
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity

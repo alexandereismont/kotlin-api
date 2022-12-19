@@ -1,6 +1,6 @@
-package com.example.kotlinapi
+package com.example.kotlinapi.features.superhero
 
-import com.example.kotlinapi.dto.Superhero
+import com.example.kotlinapi.features.superhero.dto.Superhero
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
 

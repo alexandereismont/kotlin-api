@@ -1,8 +1,6 @@
-package com.example.kotlinapi.dto
+package com.example.kotlinapi.features.superhero.dto
 
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.util.*
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
