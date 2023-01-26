@@ -16,7 +16,7 @@ class UserPreferenceService(
 		val superhero = superheroRepository.findByName(userPreference.superheroName)
 
 		if(superhero != null) {
-			userPreferenceRepository.save(UserPreference(user = user, superhero = superhero))
+			userPreferenceRepository.save(UserPreference(username = user, superhero = superhero))
 		}
 	}
 

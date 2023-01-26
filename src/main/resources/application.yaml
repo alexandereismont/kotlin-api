@@ -10,14 +10,17 @@ springdoc:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/base?useSSL=false&serverTimezone=UTC
+    url: jdbc:postgresql://localhost:5434/kotlin-api?useSSL=false&serverTimezone=UTC
     username: app_user
     password: password
     initialization-mode: always
+    driverClassName: org.postgresql.Driver
+    hikari:
+      schema: api
   jpa:
     properties:
       hibernate:
-        default_schema: base
+        default_schema: api
   flyway:
     baseline-on-migrate: true
 
@@ -31,8 +34,8 @@ keycloak:
  #     initialize-schema: always
 
 flyway:
-  url: jdbc:mysql://localhost:3306/base
-  schemas: base
+  url: jdbc:postgresql://localhost:5434/kotlin-api
+  schemas: api
   user: app_user
   password: password
   baseline-on-migrate: true
