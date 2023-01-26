@@ -1,6 +1,5 @@
 package com.example.kotlinapi.features.superhero.dto
 
-import com.example.kotlinapi.features.superhero.dto.Superhero
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -14,7 +13,7 @@ data class UserPreference(
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	val id: Long? = 0,
-	val user: String,
+	val username: String,
 	@ManyToOne
 	val superhero: Superhero
 )

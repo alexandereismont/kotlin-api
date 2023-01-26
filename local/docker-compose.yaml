@@ -2,35 +2,35 @@ version: "3.8"
 
 services:
 
-  mysql:
-    image: mysql:5.7.32
-    container_name: mysql
-    ports:
-      - "3306:3306"
+  postgres_api:
+    image: postgres
     environment:
-      - MYSQL_DATABASE=keycloak
-      - MYSQL_USER=keycloak
-      - MYSQL_PASSWORD=password
-      - MYSQL_ROOT_PASSWORD=root_password
-    healthcheck:
-      test: "mysqladmin ping -u root -p$${MYSQL_ROOT_PASSWORD}"
-      start_period: 10s
+      POSTGRES_DB: kotlin-api
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - '5434:5432'
+    volumes:
+      - "./init.sql:/docker-entrypoint-initdb.d/1.sql"
 
   keycloak:
     image: jboss/keycloak:12.0.2
     container_name: keycloak
     environment:
+      - DB_VENDOR=POSTGRES
+      - DB_ADDR=postgres
+      - DB_DATABASE=keycloak
+      - DB_USER=keycloak
+      - DB_SCHEMA=keycloak
+      - DB_PASSWORD=password
+      - DB_PORT=5434
       - KEYCLOAK_USER=admin
       - KEYCLOAK_PASSWORD=admin
-      - DB_VENDOR=mysql
-      - DB_ADDR=mysql
-      - DB_USER=keycloak
-      - DB_PASSWORD=password
       - JDBC_PARAMS=useSSL=false
     ports:
       - "8180:8080"
     depends_on:
-      - mysql
+      - postgres_api
     healthcheck:
       test: "curl -f http://localhost:8180/auth || exit 1"
       start_period: 20s
