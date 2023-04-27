@@ -8,7 +8,22 @@
         </encoder>
     </appender>
 
-    <root level="info">
-        <appender-ref ref="standard_console"/>
-    </root>
+    <appender name="json_console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <customFields>{"app_version": "${app_version}"}</customFields>
+            <includeMdcKeyName>request_id</includeMdcKeyName>
+        </encoder>
+    </appender>
+
+    <springProfile name="json">
+        <root level="INFO">
+            <appender-ref ref="json_console"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="local">
+        <root level="INFO">
+            <appender-ref ref="standard_console"/>
+        </root>
+    </springProfile>
 </configuration>
